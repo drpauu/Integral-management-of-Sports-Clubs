@@ -1,0 +1,81 @@
+Explicació de la consulta (resum)
+    Subconsultes comunes (CTEs):
+        assistencia_per_membre: Calcula el nombre total d'assistències per cada membre d'un equip.
+        equip_stats: Calcula estadístiques bàsiques (nombre de competicions, partits jugats, minuts jugats) per cada equip.
+        equip_entrenament: Calcula el nombre total d'entrenaments assistits i la duració mitjana dels entrenaments per cada equip.
+
+    Consulta principal:
+        Uneix les subconsultes CTEs per obtenir les estadístiques desitjades.
+        Utilitza LEFT JOIN per assegurar-se que es capturen tots els equips encara que no tinguin entrades corresponents en alguna de les subconsultes.
+        Calcula el nombre mitjà d'assistències per membre de l'equip (average_assistencies_per_membre).
+
+    Clàusula GROUP BY:
+        Agrupem pels camps seleccionats per obtenir les dades agregades per equip.
+
+    Clàusula ORDER BY:
+        Ordenem els resultats primer pel nombre de competicions (total_competitions) en ordre descendent i després pel temps mitjà jugat (average_minutes_jugats) també en ordre descendent.
+
+Explicació de com la consulta compleix les condicions establertes (extès)
+
+La consulta SQL que hem creat compleix totes les condicions especificades per obtenir informació útil per a la direcció/gerència de l'organització esportiva. A continuació es detallen les condicions i com es compleixen:
+
+    Consulta un mínim de 3 taules (fer 2 joins):
+        La consulta utilitza més de 3 taules i realitza múltiples JOINs per combinar les dades. Concretament, es fa JOIN entre les taules equip, participació_equip, estadística, membre_equip, membre i assistencia.
+
+    Usar les clàusules WHERE, GROUP BY i ORDER BY:
+        Clàusula WHERE: S'utilitza la clàusula WHERE per filtrar les dades de l'esport 'Futbol':
+
+        sql
+
+WHERE e.esport = 'Futbol'
+
+Clàusula GROUP BY: S'utilitza la clàusula GROUP BY per agrupar les dades per nom de l'equip:
+
+sql
+
+GROUP BY e.nom
+
+Clàusula ORDER BY: S'utilitza la clàusula ORDER BY per ordenar els resultats pel nombre total de competicions i pel temps mitjà jugat en ordre descendent:
+
+sql
+
+    ORDER BY es.total_competitions DESC, es.average_minutes_jugats DESC
+
+Calcular dades totalitzades amb GROUP BY usant COUNT(), SUM(), AVG(), etc.:
+
+    La consulta utilitza diverses funcions d'agregació per calcular dades totalitzades:
+        COUNT(DISTINCT pe.nom_competicio) AS total_competitions: Nombre total de competicions en què ha participat cada equip.
+        SUM(est.partits_jugats) AS total_partits_jugats: Nombre total de partits jugats pels membres de l'equip.
+        AVG(est.minuts_jugats) AS average_minutes_jugats: Temps mitjà jugat per competició pels membres de l'equip.
+        COUNT(DISTINCT a.num_soci || a.data || a.hora) AS total_entrenaments_assistits: Nombre total d'entrenaments assistits pels membres de l'equip.
+        AVG(a.duracio_entrenament) AS average_entrenament_duracio: Duració mitjana dels entrenaments per equip.
+        AVG(apm.total_assistencies) AS average_assistencies_per_membre: Nombre mitjà d'assistències per membre de l'equip.
+
+Usa la clàusula AS per redefinir les columnes del resultat final perquè tinguin noms descriptius:
+
+    La consulta utilitza la clàusula AS per donar noms descriptius a les columnes del resultat final:
+
+    sql
+
+        e.nom AS equip_nom,
+        COUNT(DISTINCT pe.nom_competicio) AS total_competitions,
+        SUM(est.partits_jugats) AS total_partits_jugats,
+        AVG(est.minuts_jugats) AS average_minutes_jugats,
+        COUNT(DISTINCT a.num_soci || a.data || a.hora) AS total_entrenaments_assistits,
+        AVG(a.duracio_entrenament) AS average_entrenament_duracio,
+        AVG(apm.total_assistencies) AS average_assistencies_per_membre
+
+Utilitat i complexitat de la consulta
+
+    Utilitat per a la direcció/gerència:
+        La consulta proporciona una visió integral de la participació dels equips en les competicions, així com del rendiment dels membres i la seva assistència als entrenaments. Aquesta informació és crucial per a la presa de decisions estratègiques, com ara la planificació d'entrenaments, l'avaluació del rendiment dels equips i la identificació de necessitats de millora.
+        Permet a la direcció comprendre millor quins equips són més actius i eficients, tant en termes de participació en competicions com en l'entrenament dels seus membres.
+        La informació detallada sobre el rendiment i assistència pot ajudar a identificar patrons i tendències que poden influir en les decisions de gestió i estratègia esportiva.
+
+    Complexitat de la consulta:
+        Múltiples taules i joins: La consulta combina dades de diverses taules, fent servir múltiples JOINs per obtenir la informació necessària. Això incrementa la complexitat a mesura que es creuen grans volums de dades.
+        Subconsultes comunes (CTEs): S'utilitzen diverses subconsultes (WITH) per precomputar dades agregades i millorar l'eficiència de la consulta principal.
+        Agregacions complexes: La consulta calcula múltiples agregacions (COUNT, SUM, AVG) per proporcionar una visió detallada i agregada de les dades.
+        Filtratge i ordenació: Es fa ús de la clàusula WHERE per filtrar les dades per esport, i es fa ús de ORDER BY per ordenar els resultats, assegurant que la informació sigui presentada de manera clara i ordenada segons els criteris més rellevants.
+
+En conjunt, aquesta consulta és una eina poderosa per a la direcció/gerència per obtenir una comprensió profunda de les operacions esportives, facilitant la presa de decisions basades en dades concretes i detallades.
