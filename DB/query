@@ -1,0 +1,61 @@
+WITH assistencia_per_membre AS (
+    SELECT
+        me.nom_equip,
+        a.num_soci,
+        COUNT(*) AS total_assistencies
+    FROM
+        practica.membre_equip me
+    LEFT JOIN
+        practica.assistencia a ON me.num_soci = a.num_soci
+    GROUP BY
+        me.nom_equip, a.num_soci
+),
+equip_stats AS (
+    SELECT
+        e.nom AS equip_nom,
+        COUNT(DISTINCT pe.nom_competicio) AS total_competitions,
+        SUM(est.partits_jugats) AS total_partits_jugats,
+        AVG(est.minuts_jugats) AS average_minutes_jugats
+    FROM
+        practica.equip e
+    JOIN
+        practica.participació_equip pe ON e.nom = pe.nom_equip
+    JOIN
+        practica.estadística est ON pe.nom_competicio = est.nom_competicio
+    WHERE
+        e.esport = 'Futbol'
+    GROUP BY
+        e.nom
+),
+equip_entrenament AS (
+    SELECT
+        me.nom_equip,
+        COUNT(DISTINCT a.num_soci || a.data || a.hora) AS total_entrenaments_assistits,
+        AVG(a.duracio_entrenament) AS average_entrenament_duracio
+    FROM
+        practica.membre_equip me
+    LEFT JOIN
+        practica.assistencia a ON me.num_soci = a.num_soci
+    GROUP BY
+        me.nom_equip
+)
+
+SELECT
+    es.equip_nom,
+    es.total_competitions,
+    es.total_partits_jugats,
+    es.average_minutes_jugats,
+    ee.total_entrenaments_assistits,
+    ee.average_entrenament_duracio,
+    AVG(apm.total_assistencies) AS average_assistencies_per_membre
+FROM
+    equip_stats es
+LEFT JOIN
+    equip_entrenament ee ON es.equip_nom = ee.nom_equip
+LEFT JOIN
+    assistencia_per_membre apm ON es.equip_nom = apm.nom_equip
+GROUP BY
+    es.equip_nom, es.total_competitions, es.total_partits_jugats, es.average_minutes_jugats,
+    ee.total_entrenaments_assistits, ee.average_entrenament_duracio
+ORDER BY
+    es.total_competitions DESC, es.average_minutes_jugats DESC;
