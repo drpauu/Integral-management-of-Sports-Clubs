@@ -1,0 +1,148 @@
+CREATE TABLE practica.Membre (
+    num_soci VARCHAR PRIMARY KEY,
+    nom VARCHAR NOT NULL,
+    data_naixement DATE NOT NULL,
+    sexe VARCHAR NOT NULL,
+    email VARCHAR UNIQUE NOT NULL
+);
+
+CREATE TABLE practica.Quota_Anual (
+    num_soci VARCHAR,
+    data_pagament DATE,
+    import FLOAT,
+    PRIMARY KEY (num_soci, data_pagament),
+    FOREIGN KEY (num_soci) REFERENCES practica.Membre(num_soci)
+);
+
+CREATE TABLE practica.Esport (
+    nom VARCHAR PRIMARY KEY
+);
+
+CREATE TABLE practica.Categoria (
+    id SERIAL PRIMARY KEY,
+    nivell VARCHAR UNIQUE NOT NULL
+);
+
+CREATE TABLE practica.Equip (
+    nom VARCHAR PRIMARY KEY,
+    categoria INT,
+    esport VARCHAR,
+    FOREIGN KEY (categoria) REFERENCES practica.Categoria(id),
+    FOREIGN KEY (esport) REFERENCES practica.Esport(nom)
+);
+
+CREATE TABLE practica.Competició (
+    nom VARCHAR PRIMARY KEY,
+    esport VARCHAR,
+    categoria INT,
+    any_celebracio INT NOT NULL,
+    FOREIGN KEY (esport) REFERENCES practica.Esport(nom),
+    FOREIGN KEY (categoria) REFERENCES practica.Categoria(id)
+);
+
+CREATE TABLE practica.Membre_Equip (
+    num_soci VARCHAR,
+    nom_equip VARCHAR,
+    data_inclusio DATE,
+    PRIMARY KEY (num_soci, nom_equip),
+    FOREIGN KEY (num_soci) REFERENCES practica.Membre(num_soci),
+    FOREIGN KEY (nom_equip) REFERENCES practica.Equip(nom)
+);
+
+CREATE TABLE practica.Participació_Equip (
+    nom_equip VARCHAR,
+    nom_competicio VARCHAR,
+    data_participacio DATE,
+    PRIMARY KEY (nom_equip, nom_competicio),
+    FOREIGN KEY (nom_equip) REFERENCES practica.Equip(nom),
+    FOREIGN KEY (nom_competicio) REFERENCES practica.Competició(nom)
+);
+
+CREATE TABLE practica.Estadística (
+    id SERIAL PRIMARY KEY,
+    num_soci VARCHAR,
+    nom_competicio VARCHAR,
+    partits_jugats INT,
+    minuts_jugats INT,
+    UNIQUE (num_soci, nom_competicio),
+    FOREIGN KEY (num_soci) REFERENCES practica.Membre(num_soci),
+    FOREIGN KEY (nom_competicio) REFERENCES practica.Competició(nom)
+);
+
+CREATE TABLE practica.Estadística_Bàsquet (
+    id INT PRIMARY KEY,
+    punts INT,
+    assistencies INT,
+    rebots INT,
+    FOREIGN KEY (id) REFERENCES practica.Estadística(id)
+);
+
+CREATE TABLE practica.Estadística_Futbol (
+    id INT PRIMARY KEY,
+    gols INT,
+    assistencies INT,
+    targetes_grogues INT,
+    FOREIGN KEY (id) REFERENCES practica.Estadística(id)
+);
+
+CREATE TABLE practica.Estadística_Handbol (
+    id INT PRIMARY KEY,
+    gols INT,
+    assistencies INT,
+    parades INT,
+    FOREIGN KEY (id) REFERENCES practica.Estadística(id)
+);
+
+CREATE TABLE practica.Entrenament (
+    data DATE,
+    hora TIME,
+    lloc VARCHAR,
+    esport VARCHAR,
+    categoria INT,
+    PRIMARY KEY (data, hora, esport, categoria),
+    FOREIGN KEY (esport) REFERENCES practica.Esport(nom),
+    FOREIGN KEY (categoria) REFERENCES practica.Categoria(id)
+);
+
+CREATE TABLE practica.Assistencia (
+    num_soci VARCHAR,
+    data DATE,
+    hora TIME,
+    esport VARCHAR,
+    categoria INT,
+    hora_arribada TIME,
+    duracio_entrenament INT,
+    comentaris VARCHAR,
+    PRIMARY KEY (num_soci, data, hora),
+    FOREIGN KEY (num_soci) REFERENCES practica.Membre(num_soci),
+    FOREIGN KEY (data, hora, esport, categoria) REFERENCES practica.Entrenament(data, hora, esport, categoria)
+);
+
+CREATE TABLE practica.Paquet_de_Patrocini (
+    id SERIAL PRIMARY KEY,
+    beneficis VARCHAR NOT NULL
+);
+
+CREATE TABLE practica.Patrocinador (
+    nom VARCHAR PRIMARY KEY,
+    descripcio_beneficis VARCHAR
+);
+
+CREATE TABLE practica.Acord_Patrocinadors (
+    id SERIAL PRIMARY KEY,
+    nom_patrocinador VARCHAR,
+    id_paquet INT,
+    data_acord DATE,
+    duracio INT,
+    condicions VARCHAR,
+    FOREIGN KEY (nom_patrocinador) REFERENCES practica.Patrocinador(nom),
+    FOREIGN KEY (id_paquet) REFERENCES practica.Paquet_de_Patrocini(id)
+);
+
+CREATE TABLE practica.Patrocini_Equip (
+    nom_equip VARCHAR,
+    id_paquet INT,
+    PRIMARY KEY (nom_equip, id_paquet),
+    FOREIGN KEY (nom_equip) REFERENCES practica.Equip(nom),
+    FOREIGN KEY (id_paquet) REFERENCES practica.Paquet_de_Patrocini(id)
+);
