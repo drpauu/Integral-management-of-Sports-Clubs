@@ -9,7 +9,7 @@ CREATE TABLE practica.Membre (
 CREATE TABLE practica.Quota_Anual (
     num_soci VARCHAR,
     data_pagament DATE,
-    import FLOAT,
+    import NUMERIC,
     PRIMARY KEY (num_soci, data_pagament),
     FOREIGN KEY (num_soci) REFERENCES practica.Membre(num_soci)
 );
