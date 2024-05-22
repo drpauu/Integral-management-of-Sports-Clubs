@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Edit Membre</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.num_soci.label }}<br>
+        {{ form.num_soci(size=32, readonly=True) }}
+    </p>
+    <p>
+        {{ form.nom.label }}<br>
+        {{ form.nom(size=32) }}
+    </p>
+    <p>
+        {{ form.data_naixement.label }}<br>
+        {{ form.data_naixement() }}
+    </p>
+    <p>
+        {{ form.sexe.label }}<br>
+        {{ form.sexe(size=32) }}
+    </p>
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email(size=64) }}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}

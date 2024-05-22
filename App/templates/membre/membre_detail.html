@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ membre.nom }}</h1>
+<p>Num Soci: {{ membre.num_soci }}</p>
+<p>Data Naixement: {{ membre.data_naixement }}</p>
+<p>Sexe: {{ membre.sexe }}</p>
+<p>Email: {{ membre.email }}</p>
+<a href="{{ url_for('edit_membre', num_soci=membre.num_soci) }}">Edit</a>
+<form action="{{ url_for('delete_membre', num_soci=membre.num_soci) }}" method="post">
+    <button type="submit">Delete</button>
+</form>
+{% endblock %}

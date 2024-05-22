@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Add Quota</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.num_soci.label }}<br>
+        {{ form.num_soci(size=32) }}
+    </p>
+    <p>
+        {{ form.data_pagament.label }}<br>
+        {{ form.data_pagament() }}
+    </p>
+    <p>
+        {{ form.import_.label }}<br>
+        {{ form.import_() }}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}
