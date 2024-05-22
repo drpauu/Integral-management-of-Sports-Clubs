@@ -16,11 +16,11 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 # Generar datos ficticios
-num_membres = 1000
+num_membres = 10000
 num_equips = 1000
-num_competicions = 1000
-num_entrenaments = 1000
-num_patrocinadors = 1000
+num_competicions = 500
+num_entrenaments = 5000
+num_patrocinadors = 100
 num_paquets = 1000
 
 # Crear un set para rastrear los num_soci únicos
@@ -263,7 +263,6 @@ for _ in range(num_paquets):
         cur.execute("""
             INSERT INTO practica.acord_patrocinadors (nom_patrocinador, id_paquet, data_acord, duracio, condicions)
             VALUES (%s, %s, %s, %s, %s)
-            ON CONFLICT (nom_patrocinador) DO NOTHING
         """, (nom_patrocinador, paquet_id, data_acord, duracio, condicions))
 
     # Asociar paquets a equips

@@ -25,7 +25,7 @@ La consulta SQL que hem creat compleix totes les condicions especificades per ob
     Usar les clàusules WHERE, GROUP BY i ORDER BY:
         Clàusula WHERE: S'utilitza la clàusula WHERE per filtrar les dades de l'esport 'Futbol':
 
-        sql
+            
 
 WHERE e.esport = 'Futbol'
 

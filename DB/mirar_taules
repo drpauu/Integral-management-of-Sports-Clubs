@@ -1,3 +1,22 @@
+--mirar quantes taules hi ha
 SELECT tablename
 FROM pg_tables
 WHERE schemaname = 'practica';
+
+--mirar dades per taula
+DO $$
+DECLARE
+    table_name text;
+    row_count bigint;
+BEGIN
+    FOR table_name IN
+        SELECT tablename
+        FROM pg_tables
+        WHERE schemaname = 'practica'
+    LOOP
+        EXECUTE format('SELECT COUNT(*) FROM practica.%I', table_name)
+        INTO row_count;
+        RAISE NOTICE 'Table %: % rows', table_name, row_count;
+    END LOOP;
+END $$;
+
