@@ -1,0 +1,61 @@
+                                                                                          QUERY PLAN                                                                                          
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=2835929.12..3004026.14 rows=40000 width=126) (actual time=8277.767..8284.226 rows=303 loops=1)
+   Group Key: (count(DISTINCT pe.nom_competicio)), (avg(est.minuts_jugats)), e.nom, (sum(est.partits_jugats)), ee.total_entrenaments_assistits, ee.average_entrenament_duracio
+   ->  Sort  (cost=2835929.12..2856878.75 rows=8379851 width=102) (actual time=8277.712..8278.514 rows=19079 loops=1)
+         Sort Key: (count(DISTINCT pe.nom_competicio)) DESC, (avg(est.minuts_jugats)) DESC, e.nom, (sum(est.partits_jugats)), ee.total_entrenaments_assistits, ee.average_entrenament_duracio
+         Sort Method: quicksort  Memory: 3269kB
+         ->  Hash Left Join  (cost=454738.96..497481.39 rows=8379851 width=102) (actual time=7622.359..8251.808 rows=19079 loops=1)
+               Hash Cond: ((e.nom)::text = (ee.nom_equip)::text)
+               ->  Hash Right Join  (cost=233597.68..271713.02 rows=1726121 width=62) (actual time=3925.817..4552.323 rows=19079 loops=1)
+                     Hash Cond: ((me.nom_equip)::text = (e.nom)::text)
+                     ->  GroupAggregate  (cost=156071.35..179397.31 rows=1166298 width=19) (actual time=2583.795..3206.828 rows=61344 loops=1)
+                           Group Key: me.nom_equip, a.num_soci
+                           ->  Sort  (cost=156071.35..158987.09 rows=1166298 width=11) (actual time=2583.771..3070.456 rows=1434230 loops=1)
+                                 Sort Key: me.nom_equip, a.num_soci
+                                 Sort Method: external merge  Disk: 31536kB
+                                 ->  Hash Right Join  (cost=1746.65..18613.88 rows=1166298 width=11) (actual time=25.379..171.360 rows=1434230 loops=1)
+                                       Hash Cond: ((a.num_soci)::text = (me.num_soci)::text)
+                                       ->  Seq Scan on assistencia a  (cost=0.00..1568.80 rows=61880 width=5) (actual time=0.836..15.459 rows=62001 loops=1)
+                                       ->  Hash  (cost=981.29..981.29 rows=61229 width=11) (actual time=24.510..24.510 rows=61344 loops=1)
+                                             Buckets: 65536  Batches: 1  Memory Usage: 3176kB
+                                             ->  Seq Scan on membre_equip me  (cost=0.00..981.29 rows=61229 width=11) (actual time=1.628..15.427 rows=61344 loops=1)
+                     ->  Hash  (cost=77522.63..77522.63 rows=296 width=54) (actual time=1339.294..1339.298 rows=303 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 29kB
+                           ->  GroupAggregate  (cost=70775.70..77519.67 rows=296 width=54) (actual time=1087.800..1339.192 rows=303 loops=1)
+                                 Group Key: e.nom
+                                 ->  Sort  (cost=70775.70..72123.75 rows=539222 width=20) (actual time=1087.028..1155.265 rows=539943 loops=1)
+                                       Sort Key: e.nom
+                                       Sort Method: external merge  Disk: 17184kB
+                                       ->  Hash Join  (cost=646.27..8380.36 rows=539222 width=20) (actual time=697.979..760.302 rows=539943 loops=1)
+                                             Hash Cond: ((est.nom_competicio)::text = (pe.nom_competicio)::text)
+                                             ->  Seq Scan on "estadística" est  (cost=0.00..1042.48 rows=61148 width=14) (actual time=1.695..10.202 rows=61294 loops=1)
+                                             ->  Hash  (cost=539.17..539.17 rows=8568 width=12) (actual time=696.197..696.199 rows=8535 loops=1)
+                                                   Buckets: 16384  Batches: 1  Memory Usage: 503kB
+                                                   ->  Hash Join  (cost=24.51..539.17 rows=8568 width=12) (actual time=685.405..694.730 rows=8535 loops=1)
+                                                         Hash Cond: ((pe.nom_equip)::text = (e.nom)::text)
+                                                         ->  Seq Scan on "participació_equip" pe  (cost=0.00..442.54 rows=27354 width=12) (actual time=0.537..6.270 rows=27324 loops=1)
+                                                         ->  Hash  (cost=20.81..20.81 rows=296 width=6) (actual time=684.815..684.815 rows=303 loops=1)
+                                                               Buckets: 1024  Batches: 1  Memory Usage: 20kB
+                                                               ->  Seq Scan on equip e  (cost=0.00..20.81 rows=296 width=6) (actual time=680.973..684.745 rows=303 loops=1)
+                                                                     Filter: ((esport)::text = 'Futbol'::text)
+                                                                     Rows Removed by Filter: 668
+               ->  Hash  (cost=221129.14..221129.14 rows=971 width=46) (actual time=3696.519..3696.522 rows=971 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 65kB
+                     ->  Subquery Scan on ee  (cost=191949.85..221129.14 rows=971 width=46) (actual time=1330.857..3696.090 rows=971 loops=1)
+                           ->  GroupAggregate  (cost=191949.85..221119.43 rows=971 width=46) (actual time=1330.848..3695.909 rows=971 loops=1)
+                                 Group Key: me_1.nom_equip
+                                 ->  Sort  (cost=191949.85..194865.59 rows=1166298 width=27) (actual time=1328.592..1521.433 rows=1434230 loops=1)
+                                       Sort Key: me_1.nom_equip
+                                       Sort Method: external merge  Disk: 58240kB
+                                       ->  Hash Right Join  (cost=1746.65..18613.88 rows=1166298 width=27) (actual time=13.985..142.554 rows=1434230 loops=1)
+                                             Hash Cond: ((a_1.num_soci)::text = (me_1.num_soci)::text)
+                                             ->  Seq Scan on assistencia a_1  (cost=0.00..1568.80 rows=61880 width=21) (actual time=0.005..5.525 rows=62001 loops=1)
+                                             ->  Hash  (cost=981.29..981.29 rows=61229 width=11) (actual time=13.911..13.912 rows=61344 loops=1)
+
+ Planning Time: 45.686 ms
+ JIT:
+   Functions: 76
+   Options: Inlining true, Optimization true, Expressions true, Deforming true
+   Timing: Generation 5.365 ms, Inlining 60.909 ms, Optimization 381.012 ms, Emission 238.226 ms, Total 685.511 ms
+ Execution Time: 8315.764 ms
