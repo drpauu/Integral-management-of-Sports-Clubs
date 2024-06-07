@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Competiciones{% endblock %}
+
+{% block content %}
+<h2>Gestión de Competiciones</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Esport</th>
+            <th>Categoria</th>
+            <th>Año Celebración</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for competicion in competicions %}
+        <tr>
+            <td>{{ competicion.nom }}</td>
+            <td>{{ competicion.esport }}</td>
+            <td>{{ competicion.categoria }}</td>
+            <td>{{ competicion.any_celebracio }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,7 +1,0 @@
-S'ha de fer això abans de executar o provar res:
-pip install Flask Flask-SQLAlchemy psycopg2-binary
-
-Per executar l'aplicació, simplement executa el següent:
-export FLASK_APP=app.py
-export FLASK_ENV=development
-flask run

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Miembros{% endblock %}
+
+{% block content %}
+<h2>Gestión de Miembros</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Num Soci</th>
+            <th>Nombre</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Sexo</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for membre in membres %}
+        <tr>
+            <td>{{ membre.num_soci }}</td>
+            <td>{{ membre.nom }}</td>
+            <td>{{ membre.data_naixement }}</td>
+            <td>{{ membre.sexe }}</td>
+            <td>{{ membre.email }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

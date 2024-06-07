@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Entrenamientos{% endblock %}
+
+{% block content %}
+<h2>Gestión de Entrenamientos</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Lugar</th>
+            <th>Esport</th>
+            <th>Categoria</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entrenament in entrenaments %}
+        <tr>
+            <td>{{ entrenament.data }}</td>
+            <td>{{ entrenament.hora }}</td>
+            <td>{{ entrenament.lloc }}</td>
+            <td>{{ entrenament.esport }}</td>
+            <td>{{ entrenament.categoria }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
