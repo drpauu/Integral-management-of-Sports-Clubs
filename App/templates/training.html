@@ -1,29 +1,51 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llista d'Entrenaments</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <script type="module" src="../static/img/training.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Llista d'Entrenaments</h1>
+            <nav>
+                <ul>
+                    <li><a href="./index.html" class="nav-item">Inici</a></li>
+                    <li><a href="./member.html" class="nav-item">Membres</a></li>
+                    <li><a href="./team.html" class="nav-item">Equips</a></li>
+                    <li><a href="./competition.html" class="nav-item">Competicions</a></li>
+                    <li><a href="./sport.html" class="nav-item">Esports</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-{% block title %}Entrenamientos{% endblock %}
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Lloc</th>
+                    <th>Esport</th>
+                    <th>Categoria</th>
+                    <th>Membres Presents</th>
+                </tr>
+            </thead>
+            <tbody id="training-list">
+                <!-- Les dades dels entrenaments seran carregades aquí dinàmicament -->
+            </tbody>
+        </table>
+        <div class="pagination" id="pagination">
+            <!-- Els botons de paginació seran generats aquí -->
+        </div>
+    </div>
 
-{% block content %}
-<h2>Gestión de Entrenamientos</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Data</th>
-            <th>Hora</th>
-            <th>Lloc</th>
-            <th>Esport</th>
-            <th>Categoria</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for entrenament in entrenaments %}
-        <tr>
-            <td>{{ entrenament.data }}</td>
-            <td>{{ entrenament.hora }}</td>
-            <td>{{ entrenament.lloc }}</td>
-            <td>{{ entrenament.esport }}</td>
-            <td>{{ entrenament.categoria }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+    <footer>
+        <p>© 2024 Gestió de Clubs Esportius. Tots els drets reservats.</p>
+    </footer>
+</body>
+</html>

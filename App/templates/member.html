@@ -1,29 +1,51 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llista de Membres</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <script type="module" src="../static/img/scripts.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Llista de Membres</h1>
+            <nav>
+                <ul>
+                    <li><a href="./index.html" class="nav-item">Inici</a></li>
+                    <li><a href="./team.html" class="nav-item">Equips</a></li>
+                    <li><a href="./competition.html" class="nav-item">Competicions</a></li>
+                    <li><a href="./sport.html" class="nav-item">Esports</a></li>
+                    <li><a href="./training.html" class="nav-item">Entrenaments</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-{% block title %}Miembros{% endblock %}
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Num Soci</th>
+                    <th>Nom</th>
+                    <th>Data de Naixement</th>
+                    <th>Sexe</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="member-list">
+                <!-- Les dades dels membres seran carregades aquí dinàmicament -->
+            </tbody>
+        </table>
+        <div class="pagination" id="pagination">
+            <!-- Els botons de paginació seran generats aquí -->
+        </div>
+    </div>
 
-{% block content %}
-<h2>Gestión de Miembros</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Num Soci</th>
-            <th>Nom</th>
-            <th>Data de Naixement</th>
-            <th>Sexe</th>
-            <th>Email</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for membre in membres %}
-        <tr>
-            <td>{{ membre.num_soci }}</td>
-            <td>{{ membre.nom }}</td>
-            <td>{{ membre.data_naixement }}</td>
-            <td>{{ membre.sexe }}</td>
-            <td>{{ membre.email }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+    <footer>
+        <p>© 2024 Gestió de Clubs Esportius. Tots els drets reservats.</p>
+    </footer>
+
+</body>
+</html>

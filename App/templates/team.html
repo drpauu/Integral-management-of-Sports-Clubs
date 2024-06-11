@@ -1,25 +1,48 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llista d'Equips</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <script type="module" src="../static/img/team.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Llista d'Equips</h1>
+            <nav>
+                <ul>
+                    <li><a href="./index.html" class="nav-item">Inici</a></li>
+                    <li><a href="./member.html" class="nav-item">Membres</a></li>
+                    <li><a href="./competition.html" class="nav-item">Competicions</a></li>
+                    <li><a href="./sport.html" class="nav-item">Esports</a></li>
+                    <li><a href="./training.html" class="nav-item">Entrenaments</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-{% block title %}Equipos{% endblock %}
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom de l'Equip</th>
+                    <th>Categoria</th>
+                    <th>Esport</th>
+                </tr>
+            </thead>
+            <tbody id="team-list">
+                <!-- Les dades dels equips seran carregades aquí dinàmicament -->
+            </tbody>
+        </table>
+        <div class="pagination" id="pagination">
+            <!-- Els botons de paginació seran generats aquí -->
+        </div>
+    </div>
 
-{% block content %}
-<h2>Gestión de Equipos</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Categoria</th>
-            <th>Esport</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for equip in equips %}
-        <tr>
-            <td>{{ equip.nom }}</td>
-            <td>{{ equip.categoria }}</td>
-            <td>{{ equip.esport }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+    <footer>
+        <p>© 2024 Gestió de Clubs Esportius. Tots els drets reservats.</p>
+    </footer>
+</body>
+</html>
