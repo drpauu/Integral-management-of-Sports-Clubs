@@ -15,6 +15,7 @@
                 <ul>
                     <li><a href="./index.html" class="nav-item">Inici</a></li>
                     <li><a href="./member.html" class="nav-item">Membres</a></li>
+                    <li><a href="./team.html" class="nav-item">Equips</a></li>
                     <li><a href="./competition.html" class="nav-item">Competicions</a></li>
                     <li><a href="./sport.html" class="nav-item">Esports</a></li>
                     <li><a href="./training.html" class="nav-item">Entrenaments</a></li>
@@ -30,6 +31,7 @@
                     <th>Nom de l'Equip</th>
                     <th>Categoria</th>
                     <th>Esport</th>
+                    <th>Veure Membres</th>
                 </tr>
             </thead>
             <tbody id="team-list">
@@ -38,6 +40,27 @@
         </table>
         <div class="pagination" id="pagination">
             <!-- Els botons de paginació seran generats aquí -->
+        </div>
+    </div>
+
+    <div id="membersModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Membres de l'Equip</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Num Soci</th>
+                        <th>Nom</th>
+                        <th>Data de Naixement</th>
+                        <th>Sexe</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody id="members-list">
+                    <!-- Les dades dels membres seran carregades aquí dinàmicament -->
+                </tbody>
+            </table>
         </div>
     </div>
 
