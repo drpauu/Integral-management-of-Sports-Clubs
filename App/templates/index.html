@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestió de Clubs Esportius</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+    <script type="module" src="../static/img/index.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Gestió de Clubs Esportius</h1>
+            <nav>
+                <ul>
+                    <li><a href="./member.html" class="nav-item">Membres</a></li>
+                    <li><a href="./team.html" class="nav-item">Equips</a></li>
+                    <li><a href="./competition.html" class="nav-item">Competicions</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="showcase">
+        <div class="container">
+            <h1>Benvingut a la Gestió de Clubs Esportius</h1>
+            <p>Gestiona els membres, equips, entrenaments i competicions de manera eficient.</p>
+            <a href="#" class="button">Comença Ara</a>
+        </div>
+    </div>
+
+    <div class="container content">
+        <div class="box">
+            <h3>Membres</h3>
+            <p>Gestiona la informació dels membres del club esportiu.</p>
+            <a href="#" class="info-link" data-info="membres">Més informació</a>
+        </div>
+        <div class="box">
+            <h3>Equips</h3>
+            <p>Gestiona els equips formats pels membres del club.</p>
+            <a href="#" class="info-link" data-info="equips">Més informació</a>
+        </div>
+        <div class="box">
+            <h3>Competicions</h3>
+            <p>Gestiona les competicions en les quals participen els equips.</p>
+            <a href="#" class="info-link" data-info="competicions">Més informació</a>
+        </div>
+    </div>
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="membres-info" class="info-content">
+                <h2>Informació sobre Membres</h2>
+                <p>Els membres del club són les persones inscrites a l'associació esportiva. La informació que es guarda dels membres inclou el seu nom complet, número de soci, data de naixement, sexe, i adreça de correu electrònic. Només pot haver-hi un compte associat a una adreça de correu i a un número de soci, sent aquest últim el que identifica a cada membre.</p>
+                <p>Els membres poden pertànyer a diversos equips sempre que siguin de categories o esports diferents. Així mateix, cada membre tindrà registrades les seves estadístiques personals per cada competició en la qual participa.</p>
+                <p>Per a gestionar millor les estadístiques, es guarden diferents dades segons l'esport:</p>
+                <ul>
+                    <li><strong>Bàsquet:</strong> punts anotats, assistències i rebots.</li>
+                    <li><strong>Futbol:</strong> gols, assistències i targetes grogues.</li>
+                    <li><strong>Handbol:</strong> gols anotats, assistències i parades.</li>
+                </ul>
+                <p>L'associació també gestiona les quotes anuals dels socis, guardant les dades de pagament i la data de realització. L’identificador de la quota és la data i el número de soci. A més, els membres han d'assistir a les sessions d'entrenament programades per als equips, on es registra la seva assistència.</p>
+            </div>
+            <div id="equips-info" class="info-content">
+                <h2>Informació sobre Equips</h2>
+                <p>Els equips són grups formats pels membres del club. Cada equip es distingeix pel seu nom, que serveix com a identificador de l'equip. Els equips poden estar formats per membres de diferents categories (juvenil, sènior, etc.) i esports (futbol, bàsquet, handbol, etc.).</p>
+                <p>Cada equip pot participar en diverses competicions, però dins d'una mateixa competició, un membre no pot formar part de més d'un equip. La informació que es guarda dels equips inclou el nom de l'equip i els membres que en formen part.</p>
+                <p>Per a mantenir un bon nivell competitiu, els equips realitzen sessions d'entrenament, on es registra la data, hora i lloc de cada entrenament, així com l'assistència dels membres.</p>
+            </div>
+            <div id="competicions-info" class="info-content">
+                <h2>Informació sobre Competicions</h2>
+                <p>Les competicions són esdeveniments esportius en els quals participen els equips del club. Cada competició té un nom que la identifica, l'any de celebració, i està associada a un esport i categoria específica. Un equip pot participar en diverses competicions, però dins d'una mateixa competició, un membre no pot formar part de més d'un equip.</p>
+                <p>La informació sobre les competicions inclou:</p>
+                <ul>
+                    <li><strong>Nom de la competició:</strong> que serveix com a identificador.</li>
+                    <li><strong>Esport:</strong> disciplina esportiva de la competició.</li>
+                    <li><strong>Categoria:</strong> la categoria dels participants (juvenil, sènior, etc.).</li>
+                    <li><strong>Any de celebració:</strong> l'any en què se celebra la competició.</li>
+                    <li><strong>Equips participants:</strong> els equips que participen en la competició.</li>
+                </ul>
+                <p>Les competicions són una part fonamental per mantenir l'esperit competitiu i el desenvolupament esportiu dels membres del club.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

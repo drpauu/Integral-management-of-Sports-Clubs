@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Patrocinadores{% endblock %}
+
+{% block content %}
+<h2>Gestión de Patrocinadores</h2>
+<table>
+    <thead>
+        <tr>s
+            <th>Nom</th>
+            <th>Descripció de Beneficis</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for patrocinador in patrocinadors %}
+        <tr>
+            <td>{{ patrocinador.nom }}</td>
+            <td>{{ patrocinador.descripcio_beneficis }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
