@@ -7,10 +7,17 @@ from datetime import datetime, timedelta
 fake = Faker()
 
 # Conexión a la base de datos PostgreSQL
+#conn = psycopg2.connect(
+#    dbname="est_e7594959",
+#    user="est_e7594959",
+#    password="dB.e7594959",
+#    host="localhost"
+#)
+
 conn = psycopg2.connect(
-    dbname="est_e7594959",
-    user="est_e7594959",
-    password="dB.e7594959",
+    dbname="est_c4414773",
+    user="est_c4414773",
+    password="dB.c4414773",
     host="localhost"
 )
 cur = conn.cursor()
