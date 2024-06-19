@@ -60,6 +60,23 @@
         </div>
     </div>
 
+    <!-- Modify Member Modal -->
+    <div id="modifyMemberModal" style="display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="background: white; width: 50%; margin: 10% auto; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <h2>Modify Member</h2>
+            <form id="modifyMemberForm">
+                <input type="hidden" id="modify_num_soci">
+                <div><label>Name:</label><input type="text" id="modify_nom"></div>
+                <div><label>Date of Birth:</label><input type="date" id="modify_data_naixement"></div>
+                <div><label>Sex:</label><input type="text" id="modify_sexe"></div>
+                <div><label>Email:</label><input type="email" id="modify_email"></div>
+                <button type="button" onclick="submitModification()">Save Changes</button>
+                <button type="button" onclick="closeModifyModal()">Close</button>
+            </form>
+        </div>
+    </div>
+
+
     <footer>
         <p>© 2024 Gestió de Clubs Esportius. Tots els drets reservats.</p>
     </footer>
