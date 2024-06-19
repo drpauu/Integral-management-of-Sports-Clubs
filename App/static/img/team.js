@@ -1,92 +1,62 @@
-const teamsPerPage = 10;
-let currentPage = 1;
-
 document.addEventListener('DOMContentLoaded', function() {
-    loadTeams(currentPage);
+    fetchTeams();
 
-    function loadTeams(page) {
-        fetch(`get_teams.php?page=${page}&limit=${teamsPerPage}`)
-            .then(response => response.json())
-            .then(data => {
-                displayTeams(data.teams);
-                setupPagination(data.totalTeams, teamsPerPage, page);
-            })
-            .catch(error => console.error('Error loading teams:', error));
-    }
-
-    function displayTeams(teams) {
-        const teamList = document.getElementById('team-list');
-        teamList.innerHTML = '';
-
-        teams.forEach(team => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${team.nom}</td>
-                <td>${team.categoria}</td>
-                <td>${team.esport}</td>
-                <td><button onclick="viewMembers('${team.nom}')">Veure Membres</button></td>
-            `;
-            teamList.appendChild(row);
-        });
-    }
-
-    function setupPagination(totalTeams, teamsPerPage, currentPage) {
-        const pagination = document.getElementById('pagination');
-        pagination.innerHTML = '';
-        const totalPages = Math.ceil(totalTeams / teamsPerPage);
-
-        for (let i = 1; i <= totalPages; i++) {
-            const pageLink = document.createElement('a');
-            pageLink.href = '#';
-            pageLink.innerText = i;
-            pageLink.classList.add('page-link');
-            if (i === currentPage) {
-                pageLink.classList.add('active');
-            }
-
-            pageLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                loadTeams(i);
-            });
-
-            pagination.appendChild(pageLink);
-        }
-    }
-});
-
-function viewMembers(teamName) {
-    fetch(`get_team_members.php?equip_nom=${teamName}`)
+    function fetchTeams() {
+        fetch('../backend/get_equip.php')
         .then(response => response.json())
         .then(data => {
-            displayMembers(data.members);
-            document.getElementById('membersModal').style.display = 'block';
+            const tableBody = document.getElementById('team-list');
+            tableBody.innerHTML = ''; // Clear the table body
+            data.forEach(team => {
+                const row = tableBody.insertRow();
+                const cellName = row.insertCell(0);
+                const cellSport = row.insertCell(1);
+                const cellViewMembers = row.insertCell(2);
+
+                cellName.textContent = team.nom;
+                cellSport.textContent = team.esport;
+
+                const viewMembersButton = document.createElement('button');
+                viewMembersButton.textContent = 'Veure Membres';
+                viewMembersButton.onclick = () => viewTeamMembers(team.id);
+                cellViewMembers.appendChild(viewMembersButton);
+            });
+        })
+        .catch(error => console.error('Error loading team data:', error));
+    }
+
+    function viewTeamMembers(teamId) {
+        fetch(`../backend/get_team_members.php?teamId=${teamId}`)
+        .then(response => response.json())
+        .then(data => {
+            const modal = document.getElementById('membersModal');
+            const tableBody = document.getElementById('members-list');
+            tableBody.innerHTML = ''; // Clear previous members
+
+            data.forEach(member => {
+                const row = tableBody.insertRow();
+                row.insertCell(0).textContent = member.num_soci;
+                row.insertCell(1).textContent = member.nom;
+                row.insertCell(2).textContent = member.data_naixement;
+                row.insertCell(3).textContent = member.sexe;
+                row.insertCell(4).textContent = member.email;
+            });
+
+            modal.style.display = 'block';
         })
         .catch(error => console.error('Error loading team members:', error));
-}
 
-function displayMembers(members) {
-    const membersList = document.getElementById('members-list');
-    membersList.innerHTML = '';
+        // Close modal setup
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('membersModal').style.display = 'none';
+        };
+    }
 
-    members.forEach(member => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${member.num_soci}</td>
-            <td>${member.nom}</td>
-            <td>${member.data_naixement}</td>
-            <td>${member.sexe}</td>
-            <td>${member.email}</td>
-        `;
-        membersList.appendChild(row);
-    });
-}
-
-document.querySelector('.close').addEventListener('click', function() {
-    document.getElementById('membersModal').style.display = 'none';
-});
-
-window.addEventListener('click', function(event) {
-    if (event.target == document.getElementById('membersModal')) {
-        document.getElementById('membersModal').style.display = 'none';
+    // Close modal if clicked outside of it
+    window.onclick = function(event) {
+        const modal = document.getElementById('membersModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     }
 });

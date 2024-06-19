@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${training.hora}</td>
                 <td>${training.lloc}</td>
                 <td>${training.esport}</td>
-                <td>${training.categoria}</td>
                 <td>${training.membres_present.join(', ')}</td>
             `;
             trainingList.appendChild(row);

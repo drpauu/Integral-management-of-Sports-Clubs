@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadCompetitions(currentPage);
 
     function loadCompetitions(page) {
-        fetch(`get_competitions.php?page=${page}&limit=${competitionsPerPage}`)
+        fetch(`../backend/get_competicio.php?page=${page}&limit=${competitionsPerPage}`)
             .then(response => response.json())
             .then(data => {
                 displayCompetitions(data.competitions);
@@ -16,14 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayCompetitions(competitions) {
         const competitionList = document.getElementById('competition-list');
-        competitionList.innerHTML = '';
-
+        competitionList.innerHTML = ''; // Clear the table body
+    
         competitions.forEach(competition => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${competition.nom}</td>
                 <td>${competition.esport}</td>
-                <td>${competition.categoria}</td>
                 <td>${competition.any_celebracio}</td>
             `;
             competitionList.appendChild(row);
