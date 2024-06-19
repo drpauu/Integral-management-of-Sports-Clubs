@@ -2,55 +2,44 @@ const membersPerPage = 10;
 let currentPage = 1;
 
 document.addEventListener('DOMContentLoaded', function() {
-    loadMembers(currentPage);
+    // Initial fetch to load members
+    fetchMembers();
 
-    function loadMembers(page) {
-        fetch(`get_members.php?page=${page}&limit=${membersPerPage}`)
-            .then(response => response.json())
-            .then(data => {
-                displayMembers(data.members);
-                setupPagination(data.totalMembers, membersPerPage, page);
-            })
-            .catch(error => console.error('Error loading members:', error));
-    }
+    // Fetch members function definition
+    function fetchMembers(query = '') {
+        const url = query ? 
+            `../backend/search_members.php?searchQuery=${encodeURIComponent(query)}` :
+            '../backend/get_members.php';
 
-    function displayMembers(members) {
-        const memberList = document.getElementById('member-list');
-        memberList.innerHTML = '';
-
-        members.forEach(member => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${member.num_soci}</td>
-                <td>${member.nom}</td>
-                <td>${member.data_naixement}</td>
-                <td>${member.sexe}</td>
-                <td>${member.email}</td>
-            `;
-            memberList.appendChild(row);
+        fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const table = document.getElementById('membersTableBody');
+            table.innerHTML = ''; // Clear table for new data
+            data.forEach(item => {
+                const row = table.insertRow();
+                row.insertCell(0).textContent = item.num_soci;
+                row.insertCell(1).textContent = item.nom;
+                row.insertCell(2).textContent = item.data_naixement;
+                row.insertCell(3).textContent = item.sexe;
+                row.insertCell(4).textContent = item.email;
+            });
+        })
+        .catch(error => {
+            console.error('Error loading the members data:', error);
+            alert('Error loading the members data: ' + error.message);
         });
     }
 
-    function setupPagination(totalMembers, membersPerPage, currentPage) {
-        const pagination = document.getElementById('pagination');
-        pagination.innerHTML = '';
-        const totalPages = Math.ceil(totalMembers / membersPerPage);
-
-        for (let i = 1; i <= totalPages; i++) {
-            const pageLink = document.createElement('a');
-            pageLink.href = '#';
-            pageLink.innerText = i;
-            pageLink.classList.add('page-link');
-            if (i === currentPage) {
-                pageLink.classList.add('active');
-            }
-
-            pageLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                loadMembers(i);
-            });
-
-            pagination.appendChild(pageLink);
-        }
-    }
+    // Event listener for the search form submission
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const searchQuery = this.searchQuery.value;
+        fetchMembers(searchQuery);
+    });
 });
