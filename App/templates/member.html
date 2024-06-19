@@ -26,17 +26,17 @@
 
     <div class="top-bar">
         <form id="searchForm">
-            <input type="text" name="searchQuery" placeholder="Cercar membres...">
+            <input type="text" name="searchQuery" placeholder="Cercar per Nom o Email">
             <button type="submit">Cercar</button>
         </form>
     
-        <form id="memberForm" method="POST">
+        <form id="addMemberForm" method="POST">
             <input type="text" name="num_soci" placeholder="Número de Soci" required>
             <input type="text" name="nom" placeholder="Nom" required>
             <input type="date" name="data_naixement" placeholder="Data de Naixement" required>
             <input type="text" name="sexe" placeholder="Sexe" required>
             <input type="email" name="email" placeholder="Email" required>
-            <button type="submit">Guardar</button>
+            <button type="submit">Afegir membre</button>
         </form>
     </div>
 
@@ -52,7 +52,7 @@
                 </tr>
             </thead>
             <tbody id="membersTableBody">
-                <!-- Members data will be inserted here -->
+                <!-- Les dades dels membres s'inseriran aquí -->
             </tbody>
         </table>
         <div class="pagination" id="pagination">
